@@ -28,10 +28,10 @@ class Lot(db.Model):
     __tablename__ = 'lots'
     id = db.Column(db.Integer, primary_key=True)
     location_name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Float, nullable=False)  # price per unit time (e.g., per minute)
+    price = db.Column(db.Float, nullable=False)  # price per unit time
     address = db.Column(db.String(200), nullable=True)
     pin_code = db.Column(db.String(20), nullable=True)
-    max_wheels = db.Column(db.Integer, nullable=False)  # total wheel capacity
+    max_wheels = db.Column(db.Integer, nullable=False)
 
     spots = db.relationship('Spot', backref='lot', cascade='all, delete-orphan')
     reservations = db.relationship('Reservation', backref='lot', cascade='all, delete-orphan')
