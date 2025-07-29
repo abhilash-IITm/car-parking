@@ -1,0 +1,131 @@
+/* Reset and base font */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2ecc40; /* green background */
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER - Profile Box */
+header {
+    background: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    color: #2ecc40;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    font-weight: 600;
+}
+
+.profile-pic {
+    background-color: #2ecc40;
+    color: white;
+    font-weight: bold;
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    user-select: none;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 1.2rem;
+}
+.profile-username {
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+/* MAIN CONTENT */
+main {
+    flex-grow: 1;
+    padding: 1.5rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Analytics section */
+.analytics {
+    background: #27ae40; /* darker green block */
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: white;
+}
+
+.analytic-item {
+    min-width: 220px;
+    flex: 1 1 220px;
+    background: #229a35;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+}
+
+.analytic-item h3 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.analytic-item p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+/* Parking spots grid */
+.parking-spots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+}
+
+.parking-spot-card {
+    background: #27ae40;
+    padding: 1.2rem 1.6rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.parking-spot-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+.parking-spot-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+.parking-spot-occupancy {
+    font-size: 1rem;
+    font-weight: 600;
+}

@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
 </head>
 <body>
-    <p>dashboard admin</p>
+
+<header>
+    <div class="profile-pic">
+        {{ username[0] | upper }}
+    </div>
+    <div class="profile-details">
+        <div class="profile-name">{{ name }}</div>
+        <div class="profile-username">@{{ username }}</div>
+    </div>
+</header>
+
+<main>
+    <!-- Analytics Block -->
+    <section class="analytics" aria-label="Parking analytics summary">
+        <div class="analytic-item">
+            <h3>{{ total_wheels_occupied }}</h3>
+            <p>Wheels Occupied</p>
+        </div>
+        <div class="analytic-item">
+            <h3>{{ occupancy_percent }}%</h3>
+            <p>Occupied Percentage</p>
+        </div>
+        <div class="analytic-item">
+            <h3>${{ revenue_per_minute }}</h3>
+            <p>Revenue / Minute</p>
+        </div>
+    </section>
+
+    <!-- Parking Spots Grid -->
+    <section class="parking-spots-grid" aria-label="Grid of parking lots and occupancy">
+        {% for lot in parking_lots %}
+        <article class="parking-spot-card">
+            <div class="parking-spot-title">{{ lot.location_name }}</div>
+            <div class="parking-spot-subtitle">{{ lot.pin_code }}</div>
+            <div class="parking-spot-occupancy">
+                {{ lot.occupied_wheels }} / {{ lot.max_wheels }} wheels occupied
+            </div>
+        </article>
+        {% else %}
+        <p>No parking lots available.</p>
+        {% endfor %}
+    </section>
+
+</main>
+
 </body>
 </html>
