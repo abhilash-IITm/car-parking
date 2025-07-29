@@ -1,0 +1,85 @@
+/* Full viewport green background */
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #2ecc40; /* green */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* White centered container box with padding and rounded edges */
+.register-box {
+    background-color: white;
+    padding: 2.5rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    width: 350px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+    color: #2ecc40;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    text-align: left;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1.25rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    background-color: #2ecc40;
+    color: white;
+    border: none;
+    padding: 0.65rem;
+    border-radius: 7px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #27b437;
+}
+
+.login-link {
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.login-link a {
+    color: #2ecc40;
+    text-decoration: underline;
+}
+
+/* Flash message styling */
+.flash {
+    margin: 0 0 1rem 0;
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 0.7rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    border: 1px solid #f5c2c7;
+}
