@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Left (Green) Side -->
+        <div class="left-pane">
+            <div class="centered-text">
+                <h1>PARK WITH US</h1>
+            </div>
+        </div>
+        
+        <div class="right-pane">
+            <form class="login-form" method="POST" action="/login">
+                <h2>Login</h2>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+                
+                <button type="submit">Login</button>
+                
+                <p class="register-link">
+                    First time? <a href="/register">Register</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
