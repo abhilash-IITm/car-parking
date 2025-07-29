@@ -81,24 +81,24 @@ def create_parking_lot():
         flash('Parking lot created successfully.')
         return redirect(url_for('admin_dashboard')) 
 
-    return render_template('create_parking_lot.html')
+    return render_template('create_lot.html')
 
-# @app.route('/user/dashboard')
-# def user_dashboard():
-#     if session.get('role') != 'user':
-#         flash('Access denied.')
-#         return redirect(url_for('auth.login'))
+@app.route('/user/dashboard')
+def user_dashboard():
+    if session.get('role') != 'user':
+        flash('Access denied.')
+        return redirect(url_for('auth.login'))
 
-#     user = User.query.filter_by(username=session.get('username')).first()
-#     # You can add more user-specific reservation or parking info here, e.g. active spots or history.
+    user = User.query.filter_by(username=session.get('username')).first()
+    # You can add more user-specific reservation or parking info here, e.g. active spots or history.
 
-#     active_spots = Spot.query.filter_by(user_id=user.id).all()
-#     reservations = Reservation.query.filter_by(user_id=user.id).all()
+    active_spots = Spot.query.filter_by(user_id=user.id).all()
+    reservations = Reservation.query.filter_by(user_id=user.id).all()
 
-#     return render_template('user_dashboard.html',
-#                             user=user,
-#                             active_spots=active_spots,
-#                             reservations=reservations)
+    return render_template('user_dashboard.html',
+                            user=user,
+                            active_spots=active_spots,
+                            reservations=reservations)
 
 
 # Parking a vehicle (simplified example)

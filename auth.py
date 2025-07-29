@@ -8,6 +8,7 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        u_name = request.form.get('u_name', '').strip()
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '').strip().encode('utf-8')
 
@@ -16,7 +17,7 @@ def register():
             return render_template('register.html')
 
         hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-        new_user = User(username=username, password=hashed, role='user')
+        new_user = User(u_name=u_name,username=username, password=hashed, role='user')
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful. You may log in.')

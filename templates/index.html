@@ -15,6 +15,11 @@
         </div>
         
         <div class="right-pane">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash">{{ messages[0] }}</div>
+                {% endif %}
+            {% endwith %}
             <form class="login-form" method="POST" action="/login">
                 <h2>Login</h2>
                 <label for="username">Username</label>

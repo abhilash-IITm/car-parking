@@ -16,12 +16,15 @@
         {% endwith %}
 
         <form method="POST" action="{{ url_for('auth.register') }}">
+            <label for="u_name">Name</label>
+            <input type="text" id="u_name" name="u_name" required autocomplete="name" />
+                
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required autocomplete="username" />
-
+                
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required autocomplete="new-password" />
-
+                
             <button type="submit">Register</button>
         </form>
         <p class="login-link">
