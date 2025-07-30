@@ -1,13 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <title>User Dashboard | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+    <style>
+    .dashboard-action-buttons {
+        display: flex;
+        gap: 1.2rem;
+        justify-content: center;
+        margin: 2rem 0 2.4rem 0;
+        flex-wrap: wrap;
+    }
+    .dashboard-action-buttons a,
+    .dashboard-action-buttons form button {
+        background-color: #2ecc40;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        padding: 0.85rem 2.1rem;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(46,204,64,0.18);
+        transition: background 0.2s;
+        margin-bottom: 0.7rem;
+    }
+    .dashboard-action-buttons a:hover,
+    .dashboard-action-buttons form button:hover {
+        background: #27b437;
+    }
+    </style>
 </head>
 <body>
-    <p>
-        dashboard user
-    </p>
+    <header class="user-header">
+        <div class="profile-pic">{{ user.u_name[0]|upper if user.u_name else user.username[0]|upper }}</div>
+        <div class="profile-details">
+            <div class="profile-name">{{ user.u_name or user.username }}</div>
+            <div class="profile-username">@{{ user.username }}</div>
+        </div>
+        <a href="{{ url_for('auth.logout') }}" class="logout-button">Logout</a>
+    </header>
+
+    <main>
+        <!-- Summary analytics block -->
+        <section class="analytics-section">
+            <div class="analytics-card">
+                <h3>{{ total_time_parked }}</h3>
+                <p>Total parking time</p>
+            </div>
+            <div class="analytics-card">
+                <h3>{{ total_amount_paid }}</h3>
+                <p>Total paid</p>
+            </div>
+            <div class="analytics-card">
+                <h3>{{ total_bookings }}</h3>
+                <p>Reservations</p>
+            </div>
+        </section>
+
+        <!-- Action buttons for parking and vehicle register -->
+        <div class="dashboard-action-buttons">
+            <!-- Park Vehicle button; submit to /park (you can use GET or redirect to a modal/page as per your flow) -->
+            <form method="POST" action="{{ url_for('park_vehicle') }}">
+                <button type="submit">Park Vehicle</button>
+            </form>
+            <!-- Register Vehicle button, link to vehicle_register.html -->
+            <a href="{{ url_for('user.register_vehicle') }}">Register Vehicle</a>
+        </div>
+
+        <!-- Current Active Parking (if any) -->
+        <section class="active-parking-section">
+            <h2>Current Parking</h2>
+            {% if active_spot %}
+                <div class="active-parking-card">
+                    <strong>Lot:</strong> {{ active_spot.lot.location_name }} ({{ active_spot.lot.pin_code }})<br/>
+                    <strong>Vehicle:</strong> {{ active_spot.vehicle.v_number }}<br/>
+                    <strong>Parked at:</strong> {{ active_spot.parked_at.strftime('%Y-%m-%d %H:%M') }}<br/>
+                    <form method="POST" action="{{ url_for('leave_spot', spot_id=active_spot.id) }}">
+                        <button type="submit" class="release-button">Release Spot</button>
+                    </form>
+                </div>
+            {% else %}
+                <p>You do not have an active parking spot.</p>
+            {% endif %}
+        </section>
+
+        <!-- Reservation / Parking History -->
+        <section class="history-section">
+            <h2>Parking History</h2>
+            {% if reservations %}
+                <div class="history-table-wrapper">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Lot</th>
+                                <th>Vehicle</th>
+                                <th>Arrival</th>
+                                <th>Departure</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for res in reservations %}
+                            <tr>
+                                <td>{{ res.lot.location_name }}</td>
+                                <td>{{ res.vehicle.v_number }}</td>
+                                <td>{{ res.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>
+                                    {% if res.leaving_timestamp %}
+                                        {{ res.leaving_timestamp.strftime('%Y-%m-%d %H:%M') }}
+                                    {% else %}
+                                        --
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if res.amount %}
+                                        ₹{{ res.amount }}
+                                    {% else %}
+                                        --
+                                    {% endif %}
+                                </td>
+                                <td>{{ res.payment_status }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No parking history found.</p>
+            {% endif %}
+        </section>
+    </main>
 </body>
 </html>

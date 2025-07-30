@@ -12,6 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 app.register_blueprint(auth_bp)
+from user import user_bp
+app.register_blueprint(user_bp)
 
 
 @app.route('/')
@@ -102,48 +104,48 @@ def user_dashboard():
 
 
 # Parking a vehicle (simplified example)
-# @app.route('/park', methods=['POST'])
-# def park_vehicle():
-#     if 'user_id' not in session:
-#         flash('Please login first.')
-#         return redirect(url_for('auth.login'))
+@app.route('/park', methods=['POST'])
+def park_vehicle():
+    if 'user_id' not in session:
+        flash('Please login first.')
+        return redirect(url_for('auth.login'))
 
-#     user_id = session['user_id']
-#     vehicle_id = request.form.get('vehicle_id')
-#     lot_id = request.form.get('lot_id')
+    user_id = session['user_id']
+    vehicle_id = request.form.get('vehicle_id')
+    lot_id = request.form.get('lot_id')
 
-#     vehicle = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
-#     lot = Lot.query.get(lot_id)
+    vehicle = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
+    lot = Lot.query.get(lot_id)
 
-#     if not vehicle or not lot:
-#         flash('Invalid vehicle or lot selected.')
-#         return redirect(url_for('user_dashboard'))
+    if not vehicle or not lot:
+        flash('Invalid vehicle or lot selected.')
+        return redirect(url_for('user_dashboard'))
 
-#     # Check available wheels capacity
-#     current_occupied_wheels = db.session.query(db.func.sum(Spot.no_of_wheels)).filter(Spot.lot_id == lot_id).scalar() or 0
+    # Check available wheels capacity
+    current_occupied_wheels = db.session.query(db.func.sum(Spot.no_of_wheels)).filter(Spot.lot_id == lot_id).scalar() or 0
 
-#     if current_occupied_wheels + vehicle.wheels_no > lot.max_wheels:
-#         flash('Parking lot is full for your vehicle’s wheels count.')
-#         return redirect(url_for('user_dashboard'))
+    if current_occupied_wheels + vehicle.wheels_no > lot.max_wheels:
+        flash('Parking lot is full for your vehicle’s wheels count.')
+        return redirect(url_for('user_dashboard'))
 
-#     # Create Spot record representing parked vehicle
-#     spot = Spot(lot_id=lot.id, user_id=user_id, vehicle_id=vehicle.id, no_of_wheels=vehicle.wheels_no)
-#     db.session.add(spot)
+    # Create Spot record representing parked vehicle
+    spot = Spot(lot_id=lot.id, user_id=user_id, vehicle_id=vehicle.id, no_of_wheels=vehicle.wheels_no)
+    db.session.add(spot)
 
-#     # Create Reservation record with pending payment & leaving_timestamp = None initially
-#     reservation = Reservation(
-#         lot_id=lot.id,
-#         user_id=user_id,
-#         vehicle_id=vehicle.id,
-#         wheels_occupied=vehicle.wheels_no,
-#         parking_timestamp=datetime.utcnow(),
-#         payment_status='Pending'
-#     )
-#     db.session.add(reservation)
-#     db.session.commit()
+    # Create Reservation record with pending payment & leaving_timestamp = None initially
+    reservation = Reservation(
+        lot_id=lot.id,
+        user_id=user_id,
+        vehicle_id=vehicle.id,
+        wheels_occupied=vehicle.wheels_no,
+        parking_timestamp=datetime.utcnow(),
+        payment_status='Pending'
+    )
+    db.session.add(reservation)
+    db.session.commit()
 
-#     flash('Vehicle parked successfully.')
-#     return redirect(url_for('user_dashboard'))
+    flash('Vehicle parked successfully.')
+    return redirect(url_for('user_dashboard'))
 
 
 # # Vacate spot / leave parking

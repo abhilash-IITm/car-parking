@@ -1,0 +1,275 @@
+/* User Dashboard CSS - Green and White Theme */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9f7;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header with profile and logout */
+.user-header {
+    background-color: white;
+    color: #2ecc40;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.profile-pic {
+    background-color: #2ecc40;
+    color: white;
+    font-weight: bold;
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    user-select: none;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.profile-name {
+    font-size: 1.3rem;
+}
+
+.profile-username {
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.45rem 1.1rem;
+    border-radius: 7px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+/* Main container and sections */
+main {
+    flex-grow: 1;
+    padding: 1.5rem 2rem 3rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Analytics cards styling */
+.analytics-section {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.analytics-card {
+    background: white;
+    color: #2ecc40;
+    border-radius: 15px;
+    box-shadow: 0 3px 8px rgba(46, 204, 64, 0.3);
+    width: 28%;
+    min-width: 160px;
+    text-align: center;
+    padding: 1.8rem 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+    user-select: none;
+}
+
+.analytics-card p {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #27ae40;
+    margin-top: 0.3rem;
+}
+
+/* Active parking section */
+.active-parking-section {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(46,204,64,0.25);
+    margin-bottom: 2rem;
+}
+
+.active-parking-section h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #2ecc40;
+}
+
+.active-parking-card {
+    padding: 1rem;
+    border-radius: 12px;
+    border: 2px solid #27ae40;
+    background-color: #f0fbf0;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.release-button {
+    margin-top: 1rem;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.release-button:hover {
+    background-color: #c0392b;
+}
+
+/* Parking history section */
+.history-section {
+    margin-bottom: 2rem;
+}
+
+.history-section h2 {
+    color: #2ecc40;
+    margin-bottom: 1rem;
+}
+
+.history-table-wrapper {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+.history-table th,
+.history-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #d2d6d2;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.history-table th {
+    background-color: #f0fbf0;
+    color: #2ecc40;
+}
+
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Booking form section */
+.book-parking-section h2 {
+    color: #2ecc40;
+    margin-bottom: 1rem;
+}
+
+.book-parking-form {
+    background: white;
+    padding: 1.8rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(46,204,64,0.25);
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.book-parking-form label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.book-parking-form select {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+.park-button {
+    background-color: #2ecc40;
+    color: white;
+    border: none;
+    padding: 0.8rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.park-button:hover {
+    background-color: #27b437;
+}
+
+/* General link styling */
+.book-parking-section p,
+.book-parking-section a {
+    text-align: center;
+    color: #2ecc40;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1rem;
+    display: block;
+}
+
+.book-parking-section a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    main {
+        padding: 1rem 1rem 2rem 1rem;
+    }
+    .analytics-section {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .analytics-card {
+        width: 100%;
+    }
+    .book-parking-form {
+        max-width: 100%;
+    }
+}

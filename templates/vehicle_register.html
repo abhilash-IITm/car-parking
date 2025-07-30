@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Register Vehicle | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+    <div class="register-box">
+        <h2>Register Your Vehicle</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('user.register_vehicle') }}">
+            <label for="v_number">Vehicle Number</label>
+            <input type="text" id="v_number" name="v_number" required autocomplete="off" />
+
+            <label for="wheels_no">Number of Wheels</label>
+            <input type="number" min="2" max="18" id="wheels_no" name="wheels_no" required />
+
+            <button type="submit">Register Vehicle</button>
+        </form>
+        <p class="login-link">
+            <a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+        </p>
+    </div>
+</body>
+</html>
