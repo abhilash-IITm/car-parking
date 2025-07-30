@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Park Vehicle | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+    <div class="register-box">
+        <h2>Park Your Vehicle</h2>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('user.park_vehicle') }}">
+            <label for="vehicle_id">Select Vehicle</label>
+            <select id="vehicle_id" name="vehicle_id" required>
+                {% for vehicle in user.vehicles %}
+                    <option value="{{ vehicle.id }}">
+                        {{ vehicle.v_number }} ({{ vehicle.wheels_no }} wheels)
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="lot_id">Select Parking Lot</label>
+            <select id="lot_id" name="lot_id" required>
+                {% for lot in lots %}
+                    <option value="{{ lot.id }}">
+                      {{ lot.location_name }} ({{ lot.pin_code or 'N/A' }}) - ₹{{ lot.price }}/min
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Park Now</button>
+        </form>
+
+        <p class="login-link">
+            <a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+        </p>
+    </div>
+</body>
+</html>

@@ -273,3 +273,31 @@ main {
         max-width: 100%;
     }
 }
+
+.history-table form {
+    display: inline; 
+    margin: 0;
+    padding: 0;
+}
+
+.history-table button {
+    background-color: #2ecc40; 
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.history-table button:hover {
+    background-color: #27b437; 
+}
+
+.history-table button:disabled,
+.history-table button[disabled] {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}

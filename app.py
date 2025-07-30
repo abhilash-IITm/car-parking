@@ -2,7 +2,8 @@ import bcrypt
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from models import db, User, Lot, Spot, Reservation, Vehicle
 from auth import auth_bp
-from datetime import datetime
+from user import user_bp
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -12,7 +13,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 app.register_blueprint(auth_bp)
-from user import user_bp
 app.register_blueprint(user_bp)
 
 
@@ -91,98 +91,46 @@ def user_dashboard():
         flash('Access denied.')
         return redirect(url_for('auth.login'))
 
-    user = User.query.filter_by(username=session.get('username')).first()
-    # You can add more user-specific reservation or parking info here, e.g. active spots or history.
-
-    active_spots = Spot.query.filter_by(user_id=user.id).all()
-    reservations = Reservation.query.filter_by(user_id=user.id).all()
-
-    return render_template('user_dashboard.html',
-                            user=user,
-                            active_spots=active_spots,
-                            reservations=reservations)
-
-
-# Parking a vehicle (simplified example)
-@app.route('/park', methods=['POST'])
-def park_vehicle():
-    if 'user_id' not in session:
-        flash('Please login first.')
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    if not user:
+        flash('User not found.')
         return redirect(url_for('auth.login'))
 
-    user_id = session['user_id']
-    vehicle_id = request.form.get('vehicle_id')
-    lot_id = request.form.get('lot_id')
+    active_spot = Spot.query.filter_by(user_id=user_id).first()
+    reservations = Reservation.query.filter_by(user_id=user_id).order_by(Reservation.parking_timestamp.desc()).all()
+    
+    total_time = timedelta()
+    total_paid = 0
+    for res in reservations:
+        if res.leaving_timestamp is not None:
+            total_time += res.leaving_timestamp - res.parking_timestamp
+        else:
+            continue
 
-    vehicle = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
-    lot = Lot.query.get(lot_id)
+        if res.payment_status == 'Paid':
+            total_paid += res.amount
+    
+    total_minutes = int(total_time.total_seconds() // 60)
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
 
-    if not vehicle or not lot:
-        flash('Invalid vehicle or lot selected.')
-        return redirect(url_for('user_dashboard'))
 
-    # Check available wheels capacity
-    current_occupied_wheels = db.session.query(db.func.sum(Spot.no_of_wheels)).filter(Spot.lot_id == lot_id).scalar() or 0
 
-    if current_occupied_wheels + vehicle.wheels_no > lot.max_wheels:
-        flash('Parking lot is full for your vehicle’s wheels count.')
-        return redirect(url_for('user_dashboard'))
+    
+    total_time_parked = f"{hours}h {minutes:02d}m"
+    total_amount_paid = f"${total_paid}"
+    total_bookings = len(reservations)
 
-    # Create Spot record representing parked vehicle
-    spot = Spot(lot_id=lot.id, user_id=user_id, vehicle_id=vehicle.id, no_of_wheels=vehicle.wheels_no)
-    db.session.add(spot)
-
-    # Create Reservation record with pending payment & leaving_timestamp = None initially
-    reservation = Reservation(
-        lot_id=lot.id,
-        user_id=user_id,
-        vehicle_id=vehicle.id,
-        wheels_occupied=vehicle.wheels_no,
-        parking_timestamp=datetime.utcnow(),
-        payment_status='Pending'
+    return render_template(
+        'user_dashboard.html',
+        user=user,
+        active_spot=active_spot,
+        reservations=reservations,
+        total_time_parked=total_time_parked,
+        total_amount_paid=total_amount_paid,
+        total_bookings=total_bookings
     )
-    db.session.add(reservation)
-    db.session.commit()
-
-    flash('Vehicle parked successfully.')
-    return redirect(url_for('user_dashboard'))
-
-
-# # Vacate spot / leave parking
-# @app.route('/leave/<int:spot_id>', methods=['POST'])
-# def leave_spot(spot_id):
-#     spot = Spot.query.get(spot_id)
-
-#     # Check ownership or admin rights here as needed
-
-#     if not spot:
-#         flash('Invalid spot.')
-#         return redirect(url_for('user_dashboard'))
-
-#     # Find active reservation for this spot (w/o leaving timestamp)
-#     reservation = Reservation.query.filter_by(
-#         lot_id=spot.lot_id,
-#         user_id=spot.user_id,
-#         vehicle_id=spot.vehicle_id,
-#         leaving_timestamp=None
-#     ).order_by(Reservation.parking_timestamp.desc()).first()
-
-#     if reservation:
-#         reservation.leaving_timestamp = datetime.utcnow()
-#         duration_minutes = (reservation.leaving_timestamp - reservation.parking_timestamp).total_seconds() / 60
-
-#         lot_price = spot.lot.price
-#         reservation.amount = round(duration_minutes * lot_price, 2)
-#         reservation.payment_status = 'Pending'  # Update as payment processed
-#     else:
-#         flash('No active reservation found.')
-
-#     db.session.delete(spot)
-#     db.session.commit()
-
-#     flash('You have successfully left the parking spot.')
-#     return redirect(url_for('user_dashboard'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

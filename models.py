@@ -45,6 +45,7 @@ class Spot(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     no_of_wheels = db.Column(db.Integer, nullable=False)
     parked_at = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(1), nullable=False, default='O')
 
     vehicle = db.relationship('Vehicle', backref='active_spots')
 
