@@ -1,0 +1,109 @@
+/* Lot list page styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9f7;
+    color: #333;
+    margin: 0;
+    padding: 20px 40px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    color: #2ecc40;
+}
+
+.back-button {
+    background-color: #2ecc40;
+    color: white;
+    padding: 0.4rem 1rem;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #27b437;
+}
+
+.lot-summary {
+    background-color: white;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(46,204,64,0.2);
+    margin-bottom: 2rem;
+    color: #2ecc40;
+    font-weight: 600;
+}
+
+.lot-summary p {
+    margin: 0.4rem 0;
+}
+
+h2 {
+    color: #2ecc40;
+    margin-bottom: 1rem;
+}
+
+.vehicles-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(46,204,64,0.25);
+    overflow: hidden;
+}
+
+.vehicles-table th, .vehicles-table td {
+    padding: 0.75rem 1.2rem;
+    border-bottom: 1px solid #d2d6d2;
+    text-align: center;
+    font-weight: 600;
+}
+
+.vehicles-table th {
+    background-color: #f0fbf0;
+    color: #2ecc40;
+}
+
+.vehicles-table tr:last-child td {
+    border-bottom: none;
+}
+
+.no-vehicles {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(46,204,64,0.15);
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 700px) {
+    body {
+        padding: 15px 20px;
+    }
+    .vehicles-table th, .vehicles-table td {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .back-button {
+        margin-top: 0.5rem;
+    }
+}

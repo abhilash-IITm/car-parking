@@ -174,4 +174,15 @@ main {
     min-width: 150px;
 }
 
+.parking-spot-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.parking-spot-card-link:hover .parking-spot-card {
+    box-shadow: 0 0 20px rgba(0, 128, 0, 0.6);
+    transform: translateY(-3px);
+    transition: 0.3s ease;
+}
     

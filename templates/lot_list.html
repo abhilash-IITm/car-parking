@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ lot.location_name }} | Lot Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lot_list.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1>{{ lot.location_name }} ({{ lot.pin_code or 'N/A' }})</h1>
+        <a href="{{ url_for('admin_dashboard') }}" class="back-button">← Back to Dashboard</a>
+    </header>
+
+    <main>
+        <section class="lot-summary">
+            <p><strong>Address:</strong> {{ lot.address or 'N/A' }}</p>
+            <p><strong>Price per minute:</strong> ₹{{ lot.price }}</p>
+            <p><strong>Total Wheels Capacity:</strong> {{ lot.max_wheels }}</p>
+        </section>
+
+        <h2>Currently Parked Vehicles</h2>
+
+        {% if lot_vehicles %}
+        <table class="vehicles-table">
+            <thead>
+                <tr>
+                    <th>Vehicle Number</th>
+                    <th>Username</th>
+                    <th>Wheels</th>
+                    <th>Parked Since</th>
+                    <th>Minutes Parked</th>
+                    <th>Estimated Revenue (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in lot_vehicles %}
+                <tr>
+                    <td>{{ v.vehicle_number }}</td>
+                    <td>{{ v.username }}</td>
+                    <td>{{ v.wheels_no }}</td>
+                    <td>{{ v.parked_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ v.minutes_parked }}</td>
+                    <td>{{ v.revenue }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p class="no-vehicles">No vehicles are currently parked here.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

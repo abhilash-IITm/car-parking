@@ -38,20 +38,22 @@
     <!-- Parking Spots Grid -->
     <section class="parking-spots-grid" aria-label="Grid of parking lots and occupancy">
         {% for lot in parking_lots %}
-        <article class="parking-spot-card">
-            <div class="parking-spot-title">{{ lot.location_name }}</div>
-            <div class="parking-spot-subtitle">{{ lot.pin_code }}</div>
-            <div class="parking-spot-occupancy">
-                {{ lot.occupied_wheels }} / {{ lot.max_wheels }} wheels occupied
-            </div>
-        </article>
+        <a href="{{ url_for('admin.lot_list', lot_id=lot.id) }}" class="parking-spot-card-link" aria-label="View details of {{ lot.location_name }}">
+            <article class="parking-spot-card">
+                <div class="parking-spot-title">{{ lot.location_name }}</div>
+                <div class="parking-spot-subtitle">{{ lot.pin_code }}</div>
+                <div class="parking-spot-occupancy">
+                    {{ lot.occupied_wheels }} / {{ lot.max_wheels }} wheels occupied
+                </div>
+            </article>
+        </a>
         {% else %}
         <p>No parking lots available.</p>
         {% endfor %}
     </section>
 
     <!-- Create Parking Lot Button -->
-    <a href="{{ url_for('create_parking_lot') }}" class="create-lot-button" role="button">Create Parking Lot</a>
+    <a href="{{ url_for('admin.create_parking_lot') }}" class="create-lot-button" role="button">Create Parking Lot</a>
 </main>
 
 </body>

@@ -15,7 +15,7 @@
           {% endif %}
         {% endwith %}
 
-        <form method="POST" action="{{ url_for('create_parking_lot') }}">
+        <form method="POST" action="{{ url_for('admin.create_parking_lot') }}">
             <label for="location_name">Location Name</label>
             <input type="text" id="location_name" name="location_name" required autocomplete="off" />
 
