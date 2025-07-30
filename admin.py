@@ -28,7 +28,6 @@ def create_parking_lot():
             db.session.add(new_lot)
             db.session.commit()
             flash('Parking lot created successfully.')
-            # Redirect to dashboard route in app.py without blueprint prefix!
             return redirect(url_for('admin_dashboard'))
         except Exception as e:
             db.session.rollback()
