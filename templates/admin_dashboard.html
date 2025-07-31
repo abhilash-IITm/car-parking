@@ -22,15 +22,15 @@
     <!-- Analytics Block -->
     <section class="analytics" aria-label="Parking analytics summary">
         <div class="analytic-item">
-            <h3>{{ total_wheels_occupied }}</h3>
-            <p>Wheels Occupied</p>
+            <h3>{{ spots_occupied }}</h3>
+            <p>Spots Occupied</p>
         </div>
         <div class="analytic-item">
             <h3>{{ occupancy_percent }}%</h3>
             <p>Occupied Percentage</p>
         </div>
         <div class="analytic-item">
-            <h3>${{ revenue_per_minute }}</h3>
+            <h3>{{ revenue_per_minute }}</h3>
             <p>Revenue / Minute</p>
         </div>
     </section>
@@ -43,7 +43,7 @@
                 <div class="parking-spot-title">{{ lot.location_name }}</div>
                 <div class="parking-spot-subtitle">{{ lot.pin_code }}</div>
                 <div class="parking-spot-occupancy">
-                    {{ lot.occupied_wheels }} / {{ lot.max_wheels }} wheels occupied
+                    {{ occupied }} / {{ max_spots }} Spots occupied
                 </div>
             </article>
         </a>

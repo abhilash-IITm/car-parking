@@ -32,11 +32,28 @@
     .dashboard-action-buttons form button:hover {
         background: #27b437;
     }
+    .flash {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .release-button {
+        background: #e74c3c;
+    }
+    .release-button:hover {
+        background: #c0392b;
+    }
     </style>
 </head>
 <body>
+
     <header class="user-header">
-        <div class="profile-pic">{{ user.u_name[0]|upper if user.u_name else user.username[0]|upper }}</div>
+        <div class="profile-pic">
+            {{ user.u_name[0]|upper if user.u_name else user.username[0]|upper }}
+        </div>
         <div class="profile-details">
             <div class="profile-name">{{ user.u_name or user.username }}</div>
             <div class="profile-username">@{{ user.username }}</div>
@@ -45,6 +62,14 @@
     </header>
 
     <main>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">{{ messages[0] }}</div>
+            {% endif %}
+        {% endwith %}
+
         <!-- Summary analytics block -->
         <section class="analytics-section">
             <div class="analytics-card">
@@ -72,12 +97,12 @@
         <!-- Current Active Parking (if any) -->
         <section class="active-parking-section">
             <h2>Current Parking</h2>
-            {% if active_spot %}
+            {% if active_spot and active_reservation %}
                 <div class="active-parking-card">
                     <strong>Lot:</strong> {{ active_spot.lot.location_name }} ({{ active_spot.lot.pin_code }})<br/>
-                    <strong>Vehicle:</strong> {{ active_spot.vehicle.v_number }}<br/>
-                    <strong>Parked at:</strong> {{ active_spot.parked_at.strftime('%Y-%m-%d %H:%M') }}<br/>
-                    <form method="POST" action="{{ url_for('user.leave_spot', spot_id=active_spot.id) }}">
+                    <strong>Vehicle:</strong> {{ active_reservation.vehicle.v_number }}<br/>
+                    <strong>Parked at:</strong> {{ active_reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}<br/>
+                    <form method="POST" action="{{ url_for('user.leave_spot', spot_id=active_spot.spot_id) }}">
                         <button type="submit" class="release-button">Release Spot</button>
                     </form>
                 </div>
@@ -100,7 +125,7 @@
                                 <th>Departure</th>
                                 <th>Amount</th>
                                 <th>Status</th>
-                                <th>payment</th>
+                                <th>Payment</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,16 +143,20 @@
                                 </td>
                                 <td>
                                     {% if res.amount %}
-                                        ₹{{ res.amount }}
+                                        ₹{{ '%.2f'|format(res.amount) }}
                                     {% else %}
                                         --
                                     {% endif %}
                                 </td>
                                 <td>{{ res.payment_status }}</td>
                                 <td>
-                                    <form method="POST" action="{{ url_for('user.pay', reservation_id=res.id) }}">
-                                        <button type="submit">Pay Now</button>
-                                    </form>
+                                    {% if res.payment_status|lower in ['pending', 'failed'] %}
+                                        <form method="POST" action="{{ url_for('user.pay', reservation_id=res.r_id) }}">
+                                            <button type="submit">Pay Now</button>
+                                        </form>
+                                    {% else %}
+                                        --
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -138,6 +167,7 @@
                 <p>No parking history found.</p>
             {% endif %}
         </section>
+
     </main>
 </body>
 </html>

@@ -15,7 +15,7 @@
         <section class="lot-summary">
             <p><strong>Address:</strong> {{ lot.address or 'N/A' }}</p>
             <p><strong>Price per minute:</strong> ₹{{ lot.price }}</p>
-            <p><strong>Total Wheels Capacity:</strong> {{ lot.max_wheels }}</p>
+            <p><strong>Total Spots:</strong> {{ lot.max_spots }}</p>
         </section>
 
         <h2>Currently Parked Vehicles</h2>
@@ -26,7 +26,7 @@
                 <tr>
                     <th>Vehicle Number</th>
                     <th>Username</th>
-                    <th>Wheels</th>
+                    <th>Details</th>
                     <th>Parked Since</th>
                     <th>Minutes Parked</th>
                     <th>Estimated Revenue (₹)</th>
@@ -37,7 +37,7 @@
                 <tr>
                     <td>{{ v.vehicle_number }}</td>
                     <td>{{ v.username }}</td>
-                    <td>{{ v.wheels_no }}</td>
+                    <td>{{ v.details }}</td>
                     <td>{{ v.parked_at.strftime('%Y-%m-%d %H:%M') }}</td>
                     <td>{{ v.minutes_parked }}</td>
                     <td>{{ v.revenue }}</td>

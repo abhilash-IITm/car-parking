@@ -10,17 +10,17 @@
         <h2>Park Your Vehicle</h2>
 
         {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="flash">{{ messages[0] }}</div>
-          {% endif %}
+            {% if messages %}
+                <div class="flash">{{ messages[0] }}</div>
+            {% endif %}
         {% endwith %}
 
         <form method="POST" action="{{ url_for('user.park_vehicle') }}">
             <label for="vehicle_id">Select Vehicle</label>
             <select id="vehicle_id" name="vehicle_id" required>
                 {% for vehicle in user.vehicles %}
-                    <option value="{{ vehicle.id }}">
-                        {{ vehicle.v_number }} ({{ vehicle.wheels_no }} wheels)
+                    <option value="{{ vehicle.v_id }}">
+                        {{ vehicle.v_number }} ({{ vehicle.details }})
                     </option>
                 {% endfor %}
             </select>
@@ -28,8 +28,8 @@
             <label for="lot_id">Select Parking Lot</label>
             <select id="lot_id" name="lot_id" required>
                 {% for lot in lots %}
-                    <option value="{{ lot.id }}">
-                      {{ lot.location_name }} ({{ lot.pin_code or 'N/A' }}) - ₹{{ lot.price }}/min
+                    <option value="{{ lot.lot_id }}">
+                        {{ lot.location_name }} - ${{ lot.price }}/min
                     </option>
                 {% endfor %}
             </select>

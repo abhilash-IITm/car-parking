@@ -17,7 +17,7 @@ def register():
             return render_template('register.html')
 
         hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-        new_user = User(u_name=u_name,username=username, password=hashed, role='user')
+        new_user = User(full_name=u_name,username=username, password=hashed, role='user')
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful. You may log in.')
