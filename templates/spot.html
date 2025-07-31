@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spot Details | Vehicle Parking App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/spot.css') }}">
-    <title>Spot Details</title>
 </head>
 <body>
     <div class="spot-container">
         <section class="spot-summary">
-            <p><strong>Spot id:</strong> {{ info.spot_id }}</p>
+            <p><strong>Spot ID:</strong> {{ info.spot_id }}</p>
             <p><strong>Status:</strong> {{ "Available" if info.status == 'A' else "Occupied" }}</p>
             <p><strong>Location:</strong> {{ info.location }}</p>
             <p><strong>Price:</strong> ₹{{ info.price }}</p>

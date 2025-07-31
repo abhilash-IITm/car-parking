@@ -81,7 +81,7 @@ button:hover {
     margin-bottom: 1rem;
 }
 
-/* Side info box */
+
 .lot-info-side {
     background: #f6fff8;
     border: 1px solid #b6e7c9;
@@ -103,7 +103,7 @@ button:hover {
     word-break: break-word;
 }
 
-/* Responsive for mobile */
+
 @media (max-width: 820px) {
     .edit-lot-container {
         flex-direction: column;

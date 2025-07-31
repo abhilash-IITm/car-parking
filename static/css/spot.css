@@ -5,7 +5,7 @@ body, html {
     background-color: #2ecc40;
 }
 
-/* Container to center content */
+
 .spot-container {
     height: 100vh;
     display: flex;
@@ -15,7 +15,7 @@ body, html {
     gap: 1.5rem;
 }
 
-/* Spot summary box */
+
 .spot-summary {
     background-color: white;
     padding: 1.5rem 2rem;
@@ -28,7 +28,7 @@ body, html {
     text-align: center;
 }
 
-/* Back to dashboard button */
+
 .back-button {
     display: inline-block;
     padding: 0.7rem 1.5rem;

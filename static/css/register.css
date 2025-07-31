@@ -1,15 +1,15 @@
-/* Full viewport green background */
+
 body, html {
     height: 100%;
     margin: 0;
-    background-color: #2ecc40; /* green */
+    background-color: #2ecc40;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* White centered container box with padding and rounded edges */
+
 .register-box {
     background-color: white;
     padding: 2.5rem 3rem;
@@ -73,7 +73,7 @@ button:hover {
     text-decoration: underline;
 }
 
-/* Flash message styling */
+
 .flash {
     margin: 0 0 1rem 0;
     background-color: #f8d7da;

@@ -63,14 +63,14 @@
 
     <main>
 
-        <!-- Flash messages -->
+        
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="flash">{{ messages[0] }}</div>
             {% endif %}
         {% endwith %}
 
-        <!-- Summary analytics block -->
+        
         <section class="analytics-section">
             <div class="analytics-card">
                 <h3>{{ total_time_parked }}</h3>
@@ -86,7 +86,7 @@
             </div>
         </section>
 
-        <!-- Action buttons for parking and vehicle register -->
+        
         <div class="dashboard-action-buttons">
             <form method="POST" action="{{ url_for('user.park_vehicle') }}">
                 <button type="submit">Park Vehicle</button>
@@ -94,7 +94,7 @@
             <a href="{{ url_for('user.register_vehicle') }}">Register Vehicle</a>
         </div>
 
-        <!-- Current Active Parking (if any) -->
+        
         <section class="active-parking-section">
             <h2>Current Parking</h2>
             {% if active_spot and active_reservation %}
@@ -111,7 +111,7 @@
             {% endif %}
         </section>
 
-        <!-- Reservation / Parking History -->
+        
         <section class="history-section">
             <h2>Parking History</h2>
             {% if reservations %}

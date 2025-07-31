@@ -19,9 +19,13 @@
 </header>
 
 <main>
-    <!-- Search Spot Input Bar -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
     <section class="search-spot-section">
-        <form method="GET" action="{{ url_for('admin_dashboard') }}" class="search-spot-form">
+        <form method="GET" action="{{ url_for('admin.search_spot') }}" class="search-spot-form">
             <input 
                 type="number" 
                 name="spot_id" 
@@ -34,7 +38,7 @@
         </form>
     </section>
 
-    <!-- Analytics Block -->
+    
     <section class="analytics" aria-label="Parking analytics summary">
         <div class="analytic-item">
             <h3>{{ spots_occupied }}</h3>
@@ -50,7 +54,7 @@
         </div>
     </section>
 
-    <!-- Parking Spots Grid -->
+    
     <section class="parking-spots-grid" aria-label="Grid of parking lots and occupancy">
         {% for lot in parking_lots %}
         <a href="{{ url_for('admin.lot_list', lot_id=lot.id) }}" class="parking-spot-card-link" aria-label="View details of {{ lot.location_name }}">
@@ -73,7 +77,7 @@
         <img src="data:image/png;base64,{{ pie_img }}" alt="Pie chart: occupied spots"/>
     </section>
     {% endif %}
-    
+
     {% if bar_img %}
     <section class="dashboard-charts">
         <h3 style="color:#136b25;">Revenue by Lot</h3>
@@ -82,7 +86,7 @@
     {% endif %}
 
 
-    <!-- Buttons for View Users and Create Parking Lot -->
+    
     <div class="dashboard-bottom-buttons">
         <a href="{{ url_for('admin.view_users') }}" class="create-lot-button">View Users</a>
         <a href="{{ url_for('admin.create_parking_lot') }}" class="create-lot-button">Create Parking Lot</a>

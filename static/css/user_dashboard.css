@@ -1,4 +1,4 @@
-/* User Dashboard CSS - Green and White Theme */
+
 
 body {
     margin: 0;
@@ -10,7 +10,7 @@ body {
     flex-direction: column;
 }
 
-/* Header with profile and logout */
+
 .user-header {
     background-color: white;
     color: #2ecc40;
@@ -72,7 +72,7 @@ body {
     background-color: #c0392b;
 }
 
-/* Main container and sections */
+
 main {
     flex-grow: 1;
     padding: 1.5rem 2rem 3rem 2rem;
@@ -80,7 +80,7 @@ main {
     margin: 0 auto;
 }
 
-/* Analytics cards styling */
+
 .analytics-section {
     display: flex;
     justify-content: space-around;
@@ -110,7 +110,7 @@ main {
     margin-top: 0.3rem;
 }
 
-/* Active parking section */
+
 .active-parking-section {
     background: white;
     padding: 1.5rem 2rem;
@@ -152,7 +152,7 @@ main {
     background-color: #c0392b;
 }
 
-/* Parking history section */
+
 .history-section {
     margin-bottom: 2rem;
 }
@@ -193,7 +193,7 @@ main {
     border-bottom: none;
 }
 
-/* Booking form section */
+
 .book-parking-section h2 {
     color: #2ecc40;
     margin-bottom: 1rem;
@@ -242,7 +242,7 @@ main {
     background-color: #27b437;
 }
 
-/* General link styling */
+
 .book-parking-section p,
 .book-parking-section a {
     text-align: center;
@@ -257,7 +257,7 @@ main {
     text-decoration: underline;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 600px) {
     main {
         padding: 1rem 1rem 2rem 1rem;

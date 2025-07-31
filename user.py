@@ -74,7 +74,7 @@ def park_vehicle():
 
         reservation = Reservation(
             spot_id=available_spot.spot_id,
-            lot_id=available_spot.lot_id,   # Only one lot_id here
+            lot_id=available_spot.lot_id,   
             user_id=user_id,
             vehicle_id=vehicle.v_id,
             parking_timestamp=datetime.utcnow(),

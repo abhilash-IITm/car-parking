@@ -6,7 +6,7 @@ from user import user_bp
 from admin import admin_bp
 from datetime import datetime, timedelta
 import matplotlib
-matplotlib.use('Agg')  # Use non-GUI backend for server/non-notebook use
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import io
@@ -80,7 +80,7 @@ def admin_dashboard():
         rev = lot.price * occ
         revenues.append(rev)
 
-    # ---------- Pie Chart (Occupied Spots per Lot) ----------
+    
     pie_img = None
     if lot_names and sum(occupied_counts) > 0:
         fig1, ax1 = plt.subplots(figsize=(5,5))
@@ -93,7 +93,7 @@ def admin_dashboard():
         pie_img = base64.b64encode(buf.read()).decode('ascii')
         plt.close(fig1)
 
-    # ---------- Bar Chart (Revenue per Lot) ----------
+    
     bar_img = None
     if lot_names and revenues:
         fig2, ax2 = plt.subplots(figsize=(6,4))
@@ -158,9 +158,9 @@ def user_dashboard():
     times = []
     durations = []
     for res in reservations:
-        if res.leaving_timestamp:  # Only plot completed reservations
-            times.append(res.parking_timestamp)  # This is a datetime object
-            duration_min = (res.leaving_timestamp - res.parking_timestamp).total_seconds() / 60  # Duration in minutes
+        if res.leaving_timestamp:  
+            times.append(res.parking_timestamp)  
+            duration_min = (res.leaving_timestamp - res.parking_timestamp).total_seconds() / 60  
             durations.append(duration_min)
 
     img_b64 = None
@@ -171,7 +171,7 @@ def user_dashboard():
         ax.set_xlabel("Date & Time")
         ax.set_ylabel("Duration (minutes)")
         ax.grid(True)
-        # Set x-axis to minutes with appropriate format and auto-spacing
+        
         ax.xaxis.set_major_locator(mdates.AutoDateLocator())
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%d-%b %H:%M'))  # e.g., "31-Jul 13:45"
         fig.autofmt_xdate(rotation=45)

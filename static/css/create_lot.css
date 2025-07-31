@@ -1,4 +1,4 @@
-/* Full viewport green background */
+
 body, html {
     height: 100%;
     margin: 0;
@@ -9,7 +9,7 @@ body, html {
     align-items: center;
 }
 
-/* Centered white box with rounded edges */
+
 .register-box {
     background-color: white;
     padding: 2.5rem 3rem;
@@ -74,7 +74,7 @@ button:hover {
     text-decoration: underline;
 }
 
-/* Flash message styling */
+
 .flash {
     margin: 0 0 1rem 0;
     background-color: #f8d7da;

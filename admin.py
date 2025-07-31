@@ -103,11 +103,11 @@ def edit_parking_lot(lot_id):
             flash('Invalid input detected. Please check your entries.')
             return render_template('edit_lot.html', lot=lot)
 
-        # Update price and address directly
+        
         lot.price = new_price
         lot.address = new_address
 
-        # Handle increasing max spots
+        
         if new_max_spots > lot.max_spots:
             num_new_spots = new_max_spots - lot.max_spots
             for _ in range(num_new_spots):
@@ -117,16 +117,16 @@ def edit_parking_lot(lot_id):
             db.session.commit()
             flash(f'Lot updated successfully. {num_new_spots} new spot(s) added.')
 
-        # Handle decreasing max spots
+        
         elif new_max_spots < lot.max_spots:
             to_remove = lot.max_spots - new_max_spots
 
-            # Query available spots - status 'A'
+            
             available_spots = Spot.query.filter_by(lot_id=lot.lot_id, status='A').all()
 
             spots_to_delete = []
             for spot in available_spots:
-                # Delete **all** reservations linked to this spot (if any)
+                
                 related_reservations = Reservation.query.filter_by(spot_id=spot.spot_id).all()
                 for res in related_reservations:
                     db.session.delete(res)
@@ -138,23 +138,23 @@ def edit_parking_lot(lot_id):
                 flash('Cannot reduce spots: not enough available spots that can be deleted. Some spots may be occupied or have reservations.')
                 return render_template('edit_lot.html', lot=lot)
 
-            # Delete the spots
+            
             for spot in spots_to_delete:
                 db.session.delete(spot)
 
-            # Update max spots count
+            
             lot.max_spots = new_max_spots
             db.session.commit()
             flash(f'Lot updated successfully. {to_remove} spot(s) and related reservations removed.')
 
         else:
-            # max_spots unchanged, just update price/address
+            
             db.session.commit()
             flash('Lot details updated.')
 
         return redirect(url_for('admin.lot_list', lot_id=lot.lot_id))
 
-    # For GET, render edit form with current lot info
+    
     return render_template('edit_lot.html', lot=lot)
 
 @admin_bp.route('/lot/<int:lot_id>/delete', methods=['GET','POST'])
@@ -220,14 +220,14 @@ def view_users():
         flash('Access denied. Admins only.')
         return redirect(url_for('auth.login'))
 
-    # Get all users excluding admins
+    
     users = User.query.filter(User.role != 'admin').all()
 
-    # Prepare data for each user: vehicle count and active reservations count
+    
     users_data = []
     for user in users:
         vehicle_count = len(user.vehicles) if user.vehicles else 0
-        # Count active spots (reservations with leaving_timestamp None)
+        
         active_spots_count = Reservation.query.filter_by(user_id=user.id, leaving_timestamp=None).count()
         users_data.append({
             'username': user.username,
