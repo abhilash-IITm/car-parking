@@ -301,3 +301,18 @@ main {
     background-color: #95a5a6;
     cursor: not-allowed;
 }
+
+.dashboard-charts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2.5rem 0;
+}
+.dashboard-charts img {
+    max-width: 420px;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(46,204,64,0.13);
+    margin: 1rem auto;
+}

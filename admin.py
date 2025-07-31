@@ -82,3 +82,158 @@ def lot_list(lot_id):
             })
 
     return render_template('lot_list.html', lot=lot, lot_vehicles=lot_vehicles)
+
+@admin_bp.route('/lot/<int:lot_id>/edit', methods=['GET', 'POST'])
+def edit_parking_lot(lot_id):
+    if session.get('role') != 'admin':
+        flash('Access denied. Admins only.')
+        return redirect(url_for('auth.login'))
+
+    lot = Lot.query.get(lot_id)
+    if not lot:
+        flash('Parking lot not found.')
+        return redirect(url_for('admin_dashboard'))
+
+    if request.method == 'POST':
+        try:
+            new_max_spots = int(request.form['max_spots'])
+            new_price = float(request.form['price'])
+            new_address = request.form['address'].strip()
+        except (ValueError, KeyError):
+            flash('Invalid input detected. Please check your entries.')
+            return render_template('edit_lot.html', lot=lot)
+
+        # Update price and address directly
+        lot.price = new_price
+        lot.address = new_address
+
+        # Handle increasing max spots
+        if new_max_spots > lot.max_spots:
+            num_new_spots = new_max_spots - lot.max_spots
+            for _ in range(num_new_spots):
+                new_spot = Spot(lot_id=lot.lot_id, status='A')
+                db.session.add(new_spot)
+            lot.max_spots = new_max_spots
+            db.session.commit()
+            flash(f'Lot updated successfully. {num_new_spots} new spot(s) added.')
+
+        # Handle decreasing max spots
+        elif new_max_spots < lot.max_spots:
+            to_remove = lot.max_spots - new_max_spots
+
+            # Query available spots - status 'A'
+            available_spots = Spot.query.filter_by(lot_id=lot.lot_id, status='A').all()
+
+            spots_to_delete = []
+            for spot in available_spots:
+                # Delete **all** reservations linked to this spot (if any)
+                related_reservations = Reservation.query.filter_by(spot_id=spot.spot_id).all()
+                for res in related_reservations:
+                    db.session.delete(res)
+                spots_to_delete.append(spot)
+                if len(spots_to_delete) == to_remove:
+                    break
+
+            if len(spots_to_delete) < to_remove:
+                flash('Cannot reduce spots: not enough available spots that can be deleted. Some spots may be occupied or have reservations.')
+                return render_template('edit_lot.html', lot=lot)
+
+            # Delete the spots
+            for spot in spots_to_delete:
+                db.session.delete(spot)
+
+            # Update max spots count
+            lot.max_spots = new_max_spots
+            db.session.commit()
+            flash(f'Lot updated successfully. {to_remove} spot(s) and related reservations removed.')
+
+        else:
+            # max_spots unchanged, just update price/address
+            db.session.commit()
+            flash('Lot details updated.')
+
+        return redirect(url_for('admin.lot_list', lot_id=lot.lot_id))
+
+    # For GET, render edit form with current lot info
+    return render_template('edit_lot.html', lot=lot)
+
+@admin_bp.route('/lot/<int:lot_id>/delete', methods=['GET','POST'])
+def delete_parking_lot(lot_id):
+    if session.get('role') != 'admin':
+        flash('Access denied. Admins only.')
+        return redirect(url_for('auth.login'))
+    
+    lot = Lot.query.get(lot_id)
+    if not lot:
+        flash('Parking lot not found.')
+        return redirect(url_for('admin_dashboard'))
+    
+    if request.method == 'POST':
+        active_reservation = Reservation.query.filter_by(lot_id = lot_id, leaving_timestamp=None).first()
+        if active_reservation:
+            flash('you cannot delete the lot. Still occupied.')
+            return redirect(url_for('admin.lot_list', lot_id=lot_id))
+        
+        reservations = Reservation.query.filter_by(lot_id=lot_id)
+        for res in reservations:
+            db.session.delete(res)
+        
+        spots = Spot.query.filter_by(lot_id=lot_id)
+        for spot in spots:
+            db.session.delete(spot)
+
+        db.session.delete(lot)
+        db.session.commit()
+
+    return redirect(url_for('admin_dashboard'))
+
+
+@admin_bp.route('/search_spot')
+def search_spot():
+    spot_id = request.args.get('spot_id', type=int)
+    if not spot_id:
+        flash("Please enter a valid Spot ID.")
+        return redirect(url_for('admin.admin_dashboard'))
+
+    spot = Spot.query.filter_by(spot_id=spot_id).first()
+    if not spot:
+        flash("Invalid spot id.")
+        return redirect(url_for('admin.admin_dashboard'))
+
+    lot = Lot.query.filter_by(lot_id=spot.lot_id).first()
+    if not lot:
+        flash("Parking lot not found for this spot.")
+        return redirect(url_for('admin.admin_dashboard'))
+
+    info = {
+        'spot_id': spot.spot_id,
+        'status': spot.status,
+        'location': lot.location_name,
+        'price': lot.price
+    }
+
+    return render_template('spot.html', info=info, lot=lot)
+
+@admin_bp.route('/users')
+def view_users():
+    if session.get('role') != 'admin':
+        flash('Access denied. Admins only.')
+        return redirect(url_for('auth.login'))
+
+    # Get all users excluding admins
+    users = User.query.filter(User.role != 'admin').all()
+
+    # Prepare data for each user: vehicle count and active reservations count
+    users_data = []
+    for user in users:
+        vehicle_count = len(user.vehicles) if user.vehicles else 0
+        # Count active spots (reservations with leaving_timestamp None)
+        active_spots_count = Reservation.query.filter_by(user_id=user.id, leaving_timestamp=None).count()
+        users_data.append({
+            'username': user.username,
+            'full_name': user.full_name,
+            'vehicle_count': vehicle_count,
+            'active_spots': active_spots_count
+        })
+
+    return render_template('users.html', users=users_data)

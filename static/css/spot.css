@@ -1,0 +1,51 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2ecc40;
+}
+
+/* Container to center content */
+.spot-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Spot summary box */
+.spot-summary {
+    background-color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(46, 204, 64, 0.2);
+    color: #2ecc40;
+    font-weight: 600;
+    min-width: 280px;
+    max-width: 90vw;
+    text-align: center;
+}
+
+/* Back to dashboard button */
+.back-button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background-color: white;
+    color: #27ae60;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #1f7d2e;
+    color: white;
+}

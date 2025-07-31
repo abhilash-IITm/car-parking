@@ -19,6 +19,21 @@
 </header>
 
 <main>
+    <!-- Search Spot Input Bar -->
+    <section class="search-spot-section">
+        <form method="GET" action="{{ url_for('admin_dashboard') }}" class="search-spot-form">
+            <input 
+                type="number" 
+                name="spot_id" 
+                placeholder="Enter Spot ID to search" 
+                min="1" 
+                required 
+                value="{{ searched_spot.spot_id if searched_spot else '' }}"
+            />
+            <button type="submit">Search Spot</button>
+        </form>
+    </section>
+
     <!-- Analytics Block -->
     <section class="analytics" aria-label="Parking analytics summary">
         <div class="analytic-item">
@@ -43,7 +58,7 @@
                 <div class="parking-spot-title">{{ lot.location_name }}</div>
                 <div class="parking-spot-subtitle">{{ lot.pin_code }}</div>
                 <div class="parking-spot-occupancy">
-                    {{ occupied }} / {{ max_spots }} Spots occupied
+                    {{ lot.occupied }} / {{ lot.max_spots }} Spots occupied
                 </div>
             </article>
         </a>
@@ -52,8 +67,26 @@
         {% endfor %}
     </section>
 
-    <!-- Create Parking Lot Button -->
-    <a href="{{ url_for('admin.create_parking_lot') }}" class="create-lot-button" role="button">Create Parking Lot</a>
+    {% if pie_img %}
+    <section class="dashboard-charts">
+        <h3 style="color:#136b25;">Occupied Spots Distribution</h3>
+        <img src="data:image/png;base64,{{ pie_img }}" alt="Pie chart: occupied spots"/>
+    </section>
+    {% endif %}
+    
+    {% if bar_img %}
+    <section class="dashboard-charts">
+        <h3 style="color:#136b25;">Revenue by Lot</h3>
+        <img src="data:image/png;base64,{{ bar_img }}" alt="Bar chart: lot revenues"/>
+    </section>
+    {% endif %}
+
+
+    <!-- Buttons for View Users and Create Parking Lot -->
+    <div class="dashboard-bottom-buttons">
+        <a href="{{ url_for('admin.view_users') }}" class="create-lot-button">View Users</a>
+        <a href="{{ url_for('admin.create_parking_lot') }}" class="create-lot-button">Create Parking Lot</a>
+    </div>
 </main>
 
 </body>

@@ -1,0 +1,119 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #2ecc40;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-lot-container {
+    display: flex;
+    background: transparent;
+    gap: 35px;
+    max-width: 750px;
+    width: 95vw;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.edit-form-box {
+    background: #fff;
+    padding: 2.3rem 2.5rem;
+    border-radius: 14px;
+    box-shadow: 0 0 13px rgba(0,0,0,0.16);
+    min-width: 330px;
+    width: 350px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.edit-form-box h2 {
+    color: #2ecc40;
+    margin-bottom: 1.35rem;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 0.48rem 0.75rem;
+    margin-bottom: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+button {
+    background: #2ecc40;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 0.6rem 0;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 0.5rem;
+}
+button:hover {
+    background: #27b437;
+}
+
+.flash {
+    background: #f8d7da;
+    color: #842029;
+    padding: 0.68rem;
+    border-radius: 5px;
+    font-size: 0.99rem;
+    border: 1px solid #f5c2c7;
+    margin-bottom: 1rem;
+}
+
+/* Side info box */
+.lot-info-side {
+    background: #f6fff8;
+    border: 1px solid #b6e7c9;
+    border-radius: 13px;
+    box-shadow: 0 0 11px rgba(46,204,64,0.09);
+    padding: 1.6rem 1.4rem;
+    min-width: 240px;
+    color: #215d2b;
+}
+
+.lot-info-side h3 {
+    margin-top: 0;
+    color: #17953a;
+    margin-bottom: 1.1rem;
+}
+.lot-info-side p {
+    margin: 0.42rem 0;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* Responsive for mobile */
+@media (max-width: 820px) {
+    .edit-lot-container {
+        flex-direction: column;
+        max-width: 98vw;
+        align-items: center;
+        gap: 24px;
+    }
+    .lot-info-side {
+        min-width: 0;
+        width: 100%;
+        margin-top: 15px;
+    }
+}

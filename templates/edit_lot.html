@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Edit Parking Lot | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_lot.css') }}">
+</head>
+<body>
+    <div class="edit-lot-container">
+
+        <div class="edit-form-box">
+            <h2>Edit Lot</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash">{{ messages[0] }}</div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <label for="max_spots">Maximum Spots</label>
+                <input type="number" min="1" id="max_spots" name="max_spots" required
+                       value="{{ lot.max_spots }}" />
+
+                <label for="price">Price per minute (₹)</label>
+                <input type="number" min="0" step="0.01" id="price" name="price" required
+                       value="{{ lot.price }}" />
+
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" maxlength="200" required
+                       value="{{ lot.address }}" />
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <div class="lot-info-side">
+            <h3>Current Lot Info</h3>
+            <p><strong>Location:</strong> {{ lot.location_name }}</p>
+            <p><strong>Pin Code:</strong> {{ lot.pin_code or "N/A" }}</p>
+            <p><strong>Max Spots:</strong> {{ lot.max_spots }}</p>
+            <p><strong>Price per min:</strong> ₹{{ lot.price }}</p>
+            <p><strong>Address:</strong> {{ lot.address or "N/A" }}</p>
+        </div>
+    </div>
+</body>
+</html>

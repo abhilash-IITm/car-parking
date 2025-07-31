@@ -18,6 +18,13 @@
             <p><strong>Total Spots:</strong> {{ lot.max_spots }}</p>
         </section>
 
+        <div class="lot-actions">
+            <a href="{{ url_for('admin.edit_parking_lot', lot_id=lot.lot_id) }}" class="lot-button edit-button">Edit Lot</a>
+            <form method="POST" action="{{ url_for('admin.delete_parking_lot', lot_id=lot.lot_id) }}" style="display:inline;">
+                <button type="submit" class="lot-button delete-button" onclick="return confirm('Are you sure you want to delete this lot? All related spots must be empty.');">Delete Lot</button>
+            </form>
+        </div>
+
         <h2>Currently Parked Vehicles</h2>
 
         {% if lot_vehicles %}

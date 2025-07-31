@@ -107,3 +107,36 @@ h2 {
         margin-top: 0.5rem;
     }
 }
+
+.lot-actions {
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1.2rem;
+}
+
+.lot-button {
+    padding: 0.7rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+
+.edit-button {
+    background-color: #2980ef;
+}
+.edit-button:hover {
+    background-color: #1766c7;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+}
+.delete-button:hover {
+    background-color: #c0392b;
+}

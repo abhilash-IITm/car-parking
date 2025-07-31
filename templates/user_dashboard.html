@@ -167,7 +167,12 @@
                 <p>No parking history found.</p>
             {% endif %}
         </section>
-
+        {% if duration_line_chart %}
+        <section class="dashboard-charts">
+            <h3 style="color:#136b25;">Your Parking Duration History</h3>
+            <img src="data:image/png;base64,{{ duration_line_chart }}" alt="Parking duration line chart" style="max-width:420px; width:100%; background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(46,204,64,0.13); margin:1.5rem auto;" />
+        </section>
+        {% endif %}
     </main>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/spot.css') }}">
+    <title>Spot Details</title>
+</head>
+<body>
+    <div class="spot-container">
+        <section class="spot-summary">
+            <p><strong>Spot id:</strong> {{ info.spot_id }}</p>
+            <p><strong>Status:</strong> {{ "Available" if info.status == 'A' else "Occupied" }}</p>
+            <p><strong>Location:</strong> {{ info.location }}</p>
+            <p><strong>Price:</strong> ₹{{ info.price }}</p>
+        </section>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="back-button">← Back to Dashboard</a>
+    </div>
+</body>
+</html>
