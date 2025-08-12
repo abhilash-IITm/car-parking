@@ -237,3 +237,33 @@ def view_users():
         })
 
     return render_template('users.html', users=users_data)
+
+
+@admin_bp.route('/parking_history',methods=['GET','POST'])
+def parking_history():
+    
+    history=[]
+    if session.get('role') != 'admin':
+        flash('Access denied. Admins only.')
+        return redirect(url_for('admin.dashboard'))
+    
+    reservations = Reservation.query.filter_by()
+
+    for res in reservations:
+        parktime = res.parking_timestamp
+        leavetime = res.leaving_timestamp
+        amount = res.amount
+        status = res.payment_status
+        user_details = User.query.filter_by(id = res.user_id).first()
+        u_name = user_details.full_name
+        u_username = user_details.username
+        history.append({
+            "full_name": u_name,
+            "username": u_username,
+            "parking_time": parktime,
+            "leaving_time": leavetime,
+            "amount": amount,
+            "status": status
+        })
+
+    return render_template('history.html',reservation=history)

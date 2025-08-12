@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Users | Vehicle Parking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+</head>
+<body>
+<header>
+    <h1>Parking History</h1>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-button">← Back to Dashboard</a>
+</header>
+
+<main>
+    {% if reservation %}
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>parking time</th>
+                <th>leaving time</th>
+                <th>amount</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in reservation %}
+            <tr>
+                <td>{{ res.full_name or "N/A" }}</td>
+                <td>{{ res.username }}</td>
+                <td>{{ res.parking_time }}</td>
+                <td>{{ res.leaving_time }}</td>
+                <td>{{ res.amount }}</td>
+                <td>{{ res.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No users found.</p>
+    {% endif %}
+</main>
+</body>
+</html>
